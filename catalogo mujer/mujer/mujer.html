@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -460,13 +460,9 @@
           </button>
           
           <div class="nav-links">
-<<<<<<< HEAD
-            <a href="/proyecto/Catalogo/catalogo.html" class="nav-link">CALZADO</a>
-=======
-            <a href="/proyecto/Catalogo/index.html" class="nav-link">CALZADO</a>
->>>>>>> a508ba6d9b7709efe79f3ec89fb5e48f72b04469
-            <a href="#" class="nav-link">MUJER</a>
-            <a href="/proyecto/catalogo hombre/hombre.html" class="nav-link">HOMBRE</a>
+            <a href="catalogo.html" class="nav-link">CALZADO</a>
+            <a href="mujer.html" class="nav-link">MUJER</a>
+            <a href="hombre.html" class="nav-link">HOMBRE</a>
           </div>
         </nav>
         
@@ -484,11 +480,7 @@
       </div>
       
       <div class="back-nav">
-<<<<<<< HEAD
-        <a href="/proyecto/index.html"><button class="back-btn">← BACK</button></a>
-=======
-        <a href="/proyecto/home/index.html"><button class="back-btn">← BACK</button></a>
->>>>>>> a508ba6d9b7709efe79f3ec89fb5e48f72b04469
+        <a href="index.html"><button class="back-btn">← BACK</button></a>
       </div>
     </header>
 
@@ -499,7 +491,7 @@
         <!-- Product 1 -->
         <div class="product-card">
           <div class="product-image">
-            <img src="./img/vestido-largo.avif" alt="Vestido Largo Fashion Knit Trifolio">
+            <img src="img/vestido-largo.avif" alt="Vestido Largo Fashion Knit Trifolio">
             <div class="product-overlay">
               <div class="product-actions">
                 <button class="product-btn primary" onclick="addToCart(6)">
@@ -525,7 +517,7 @@
         <!-- Product 2 -->
         <div class="product-card">
           <div class="product-image">
-            <img src="./img/vestido-malla-avif.avif" alt="Vestido Sin Mangas Essentials 3 Rayas Camo Racer Back">
+            <img src="img/vestido-malla-avif.avif" alt="Vestido Sin Mangas Essentials 3 Rayas Camo Racer Back">
             <div class="product-overlay">
               <div class="product-actions">
                 <button class="product-btn primary" onclick="addToCart(23)">
@@ -551,7 +543,7 @@
         <!-- Product 3 -->
         <div class="product-card">
           <div class="product-image">
-            <img src="./img/vestido-sin-mangas.avif" alt="Vestido Malla Pride">
+            <img src="img/vestido-sin-mangas.avif" alt="Vestido Malla Pride">
             <div class="product-overlay">
               <div class="product-actions">
                 <button class="product-btn primary" onclick="addToCart(38)">
@@ -577,7 +569,7 @@
         <!-- Product 4 -->
         <div class="product-card">
           <div class="product-image">
-            <img src="./img/vestido3avif.avif" alt="Vestido de Tenis Pro AEROREADY Premium Manga Larga">
+            <img src="img/vestido3avif.avif" alt="Chaqueta Deportiva Impermeable">
             <div class="product-overlay">
               <div class="product-actions">
                 <button class="product-btn primary" onclick="addToCart(42)">
@@ -603,7 +595,7 @@
         <!-- Product 5 -->
         <div class="product-card">
           <div class="product-image">
-            <img src="./img/vestido-tenis-1-aeroready.avif" alt="Zapatillas Running Performance">
+            <img src="img/vestido-tenis-1-aeroready.avif" alt="Zapatillas Running Performance">
             <div class="product-overlay">
               <div class="product-actions">
                 <button class="product-btn primary" onclick="addToCart(51)">
@@ -629,7 +621,7 @@
         <!-- Product 6 -->
         <div class="product-card">
           <div class="product-image">
-            <img src="./img/Vestido2.avif" alt="Vestido Maxi">
+            <img src="img/Vestido2.avif" alt="Camiseta Deportiva Transpirable">
             <div class="product-overlay">
               <div class="product-actions">
                 <button class="product-btn primary" onclick="addToCart(67)">
@@ -674,11 +666,7 @@
           <span>Subtotal</span>
           <span class="total-amount">$0</span>
         </div>
-<<<<<<< HEAD
-        <a href="/proyecto/metodo de pago/index.html"><button class="checkout-btn">Proceder al pago</button></a>
-=======
-        <a href="/metodo de pago/pago.html"><button class="checkout-btn">Proceder al pago</button></a>
->>>>>>> a508ba6d9b7709efe79f3ec89fb5e48f72b04469
+        <a href="pago.html"><button class="checkout-btn">Proceder al pago</button></a>
         <button class="continue-shopping">Continuar comprando</button>
       </div>
     </div>
@@ -916,6 +904,12 @@
       modal.classList.remove('active');
       document.body.style.overflow = '';
     }
+
+    // Make functions available globally for onclick attributes
+    window.addToCart = addToCart;
+    window.removeFromCart = removeFromCart;
+    window.updateQuantity = updateQuantity;
+    window.showProductDetails = showProductDetails;
   </script>
 </body>
 </html>
