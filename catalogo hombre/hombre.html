@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strivo - Ropa Deportiva Masculina</title>
+    <link rel="stylesheet" href="/proyecto/catalogo hombre/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">STRIVO</div>
+        <button class="cart-btn" onclick="toggleCart()">
+            🛒 Carrito
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Colección Masculina</h1>
+            <p>Descubre lo último en ropa deportiva de alta calidad</p>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterProducts('all')">Todos</button>
+            <button class="filter-btn" onclick="filterProducts('camisetas')">Camisetas</button>
+            <button class="filter-btn" onclick="filterProducts('pantalones')">Pantalones</button>
+            <button class="filter-btn" onclick="filterProducts('calzado')">Calzado</button>
+            <button class="filter-btn" onclick="filterProducts('accesorios')">Accesorios</button>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+            <!-- Camiseta Running Pro -->
+            <div class="product-card" data-category="buzo">
+                <div class="product-image">
+                    <img src="./img/Buzo1.avif" alt="Camiseta Running Pro">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Buzo de Entrenamiento Tiro 24</div>
+                    <div class="product-category">Una prenda para entrenar, hecha con materiales reciclados.</div>
+                    <div class="product-price">$199.950</div>
+                    <div class="size-selector">
+                        <button class="size-btn" onclick="selectSize(this, 'S')">S</button>
+                        <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
+                        <button class="size-btn" onclick="selectSize(this, 'L')">L</button>
+                        <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart(1)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Pantalón Training Elite -->
+            <div class="product-card" data-category="buzo">
+                <div class="product-image">
+                    <img src="./img/chaqueta2avif.avif" alt="Pantalón Training Elite">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Chaqueta deportiva Real Madrid 99/00</div>
+                    <div class="product-category">Hombre • Fútbol</div>
+                    <div class="product-price">$499.950</div>
+                    <div class="size-selector">
+                        <button class="size-btn" onclick="selectSize(this, 'S')">S</button>
+                        <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
+                        <button class="size-btn" onclick="selectSize(this, 'L')">L</button>
+                        <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart(2)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Zapatillas Performance -->
+            <div class="product-card" data-category="buzo">
+                <div class="product-image">
+                    <img src="./img/buzo3.avif" alt="Zapatillas Performance">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Buzo con Capucha adidas Basketball Spacer (Unisex)</div>
+                    <div class="product-category">Basketball</div>
+                    <div class="product-price">$449.950</div>
+                    <div class="size-selector">
+                        <button class="size-btn" onclick="selectSize(this, '40')">40</button>
+                        <button class="size-btn" onclick="selectSize(this, '41')">41</button>
+                        <button class="size-btn" onclick="selectSize(this, '42')">42</button>
+                        <button class="size-btn" onclick="selectSize(this, '43')">43</button>
+                        <button class="size-btn" onclick="selectSize(this, '44')">44</button>
+                        <button class="size-btn" onclick="selectSize(this, '45')">45</button>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart(3)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Sudadera Comfort -->
+            <div class="product-card" data-category="buzo">
+                <div class="product-image">
+                    <img src="./img/buzo4.avif" alt="Sudadera Comfort">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Buzo Con Capucha One Basketball Felpa</div>
+                    <div class="product-category">Basketball</div>
+                    <div class="product-price">$379.950</div>
+                    <div class="size-selector">
+                        <button class="size-btn" onclick="selectSize(this, 'S')">S</button>
+                        <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
+                        <button class="size-btn" onclick="selectSize(this, 'L')">L</button>
+                        <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
+                        <button class="size-btn" onclick="selectSize(this, 'XXL')">XXL</button>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart(4)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Short Deportivo -->
+            <div class="product-card" data-category="buzo">
+                <div class="product-image">
+                    <img src="./img/buzo5.avif" alt="Short Deportivo">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Buzo con Capucha Essentials Logo Grande Tejido</div>
+                    <div class="product-category">Hombre • Sportswear</div>
+                    <div class="product-price">$199.950</div>
+                    <div class="size-selector">
+                        <button class="size-btn" onclick="selectSize(this, 'S')">S</button>
+                        <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
+                        <button class="size-btn" onclick="selectSize(this, 'L')">L</button>
+                        <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart(5)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Gorra Deportiva -->
+            <div class="product-card" data-category="buzo">
+                <div class="product-image">
+                    <img src="./img/buzo6.avif".avif" alt="Gorra Deportiva">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Buzo con Capucha Future Icons 3 Rayas Cremallera Frontal</div>
+                    <div class="product-category">Hombre • Sportswear</div>
+                    <div class="product-price">$379.950</div>
+                    <div class="size-selector">
+                        <button class="size-btn" onclick="selectSize(this, 'Única')">Única</button>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart(6)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Camiseta Técnica -->
+            <div class="product-card" data-category="buzo">
+                <div class="product-image">
+                    <img src="./img/buzo7.avif" alt="Camiseta Técnica">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Buzo con Capucha WWH</div>
+                    <div class="product-category">Originals</div>
+                    <div class="product-price">$339.950</div>
+                    <div class="size-selector">
+                        <button class="size-btn" onclick="selectSize(this, 'S')">S</button>
+                        <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
+                        <button class="size-btn" onclick="selectSize(this, 'L')">L</button>
+                        <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart(7)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Pantalón Jogger -->
+            <div class="product-card" data-category="buzo">
+                <div class="product-image">
+                    <img src="./img/buzo8.avif" alt="Pantalón Jogger">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Buzo Trifolio Essentials Cuello Redondo</div>
+                    <div class="product-category">Hombre • Originals</div>
+                    <div class="product-price">$279.950</div>
+                    <div class="size-selector">
+                        <button class="size-btn" onclick="selectSize(this, 'S')">S</button>
+                        <button class="size-btn" onclick="selectSize(this, 'M')">M</button>
+                        <button class="size-btn" onclick="selectSize(this, 'L')">L</button>
+                        <button class="size-btn" onclick="selectSize(this, 'XL')">XL</button>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart(8)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <!-- Zapatillas Casual -->
+            <div class="product-card" data-category="buzo">
+                <div class="product-image">
+                    <img src="./img/denim9.avif" alt="Zapatillas Casual">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">DENIM FB TT</div>
+                    <div class="product-category">Hombre • Originals</div>
+                    <div class="product-price">$599.950</div>
+                    <div class="size-selector">
+                        <button class="size-btn" onclick="selectSize(this, '40')">40</button>
+                        <button class="size-btn" onclick="selectSize(this, '41')">41</button>
+                        <button class="size-btn" onclick="selectSize(this, '42')">42</button>
+                        <button class="size-btn" onclick="selectSize(this, '43')">43</button>
+                        <button class="size-btn" onclick="selectSize(this, '44')">44</button>
+                        <button class="size-btn" onclick="selectSize(this, '45')">45</button>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart(9)">Añadir al Carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal del Carrito -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Tu Carrito</h2>
+                <button class="close-cart" onclick="toggleCart()">✕</button>
+            </div>
+            <div id="cartItems"></div>
+            <div class="cart-total" id="cartTotal">Total: €0.00</div>
+           <a href="/proyecto/metodo de pago/index.html"><button class="checkout-btn" onclick="proceedToCheckout()">Proceder al Pago</button></a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

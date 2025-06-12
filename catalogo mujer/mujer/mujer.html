@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Clothing Catalog with Cart Functionality</title>
+  <style>
+    /* Base styles */
+    :root {
+      --color-black: #000;
+      --color-white: #fff;
+      --color-gray-50: #f9fafb;
+      --color-gray-100: #f3f4f6;
+      --color-gray-300: #d1d5db;
+      --color-gray-500: #6b7280;
+      --color-gray-700: #374151;
+      --color-gray-800: #1f2937;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.5;
+      color: var(--color-gray-800);
+    }
+
+    /* Header styles */
+    .header {
+      background: var(--color-white);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .banner {
+      background: var(--color-black);
+      color: var(--color-white);
+      overflow: hidden;
+    }
+
+    .banner-content {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      color: var(--color-gray-800);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--color-gray-500);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .search-bar {
+      position: relative;
+    }
+
+    .search-input {
+      padding: 0.5rem 2.5rem 0.5rem 0.75rem;
+      border: 1px solid var(--color-gray-300);
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      width: 200px;
+    }
+
+    .cart-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--color-black);
+      color: var(--color-white);
+      font-size: 0.75rem;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Product grid styles */
+    .main-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: var(--color-gray-50);
+      border-radius: 0.5rem;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-image {
+      position: relative;
+      aspect-ratio: 1;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all 0.3s;
+    }
+
+    .product-card:hover .product-overlay {
+      background: rgba(0, 0, 0, 0.2);
+      opacity: 1;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .product-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .product-btn.primary {
+      background: var(--color-white);
+      color: var(--color-black);
+    }
+
+    .product-btn.secondary {
+      background: var(--color-black);
+      color: var(--color-white);
+    }
+
+    .product-info {
+      padding: 1rem;
+    }
+
+    .product-category {
+      font-size: 0.75rem;
+      color: var(--color-gray-500);
+    }
+
+    .product-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin: 0.5rem 0;
+      height: 2.5rem;
+      overflow: hidden;
+    }
+
+    .product-price {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .price-current {
+      font-weight: 600;
+    }
+
+    .price-original {
+      text-decoration: line-through;
+      color: var(--color-gray-500);
+      font-size: 0.75rem;
+    }
+
+    .price-discount {
+      background: var(--color-black);
+      color: var(--color-white);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 50;
+    }
+
+    .modal.active {
+      display: flex;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .modal-content {
+      background: var(--color-white);
+      margin: auto;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      max-width: 1000px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      float: right;
+    }
+
+    /* Cart sidebar styles */
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      max-width: 400px;
+      height: 100%;
+      background: var(--color-white);
+      box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+      z-index: 40;
+      transition: right 0.3s ease-in-out;
+    }
+
+    .cart-sidebar.active {
+      right: 0;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--color-gray-300);
+    }
+
+    .cart-items {
+      padding: 1.5rem;
+      overflow-y: auto;
+      max-height: calc(100vh - 200px);
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--color-gray-300);
+    }
+
+    .cart-item-image {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 0.25rem;
+    }
+
+    .cart-item-details {
+      flex-grow: 1;
+    }
+
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .cart-item-quantity button {
+      background: none;
+      border: 1px solid var(--color-gray-300);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .remove-item {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      color: var(--color-gray-500);
+    }
+
+    .cart-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      border-top: 1px solid var(--color-gray-300);
+      background: var(--color-white);
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: var(--color-black);
+      color: var(--color-white);
+      padding: 0.75rem;
+      border: none;
+      border-radius: 9999px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 0.75rem;
+    }
+
+    .continue-shopping {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--color-gray-500);
+      cursor: pointer;
+    }
+
+    /* Footer styles */
+    .footer {
+      background: var(--color-black);
+      color: var(--color-white);
+      padding: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .footer-links a {
+      color: var(--color-white);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .search-bar {
+        display: none;
+      }
+      
+      .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="banner">
+        <div class="banner-content">
+          <p>En sus marcas, listos... BLACK FRIDAY</p>
+          <p>¡Reinventa tu look diario!</p>
+          <p>MOVE FOR THE PLANET</p>
+        </div>
+      </div>
+      
+      <div class="main-header">
+        <nav class="nav-menu">
+          <button class="mobile-menu-btn">
+            <span class="menu-icon"></span>
+          </button>
+          
+          <div class="nav-links">
+            <a href="/proyecto/Catalogo/catalogo.html" class="nav-link">CALZADO</a>
+            <a href="#" class="nav-link">MUJER</a>
+            <a href="/proyecto/catalogo hombre/hombre.html" class="nav-link">HOMBRE</a>
+          </div>
+        </nav>
+        
+        <div class="header-actions">
+          <div class="search-bar">
+            <input type="text" placeholder="BUSCAR" class="search-input">
+            <button class="search-btn"></button>
+          </div>
+          
+          <button class="cart-btn">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-count">0</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="back-nav">
+        <a href="/proyecto/index.html"><button class="back-btn">← BACK</button></a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <h2 class="section-title">STRIVO Nuestros Productos</h2>
+      <div class="product-grid" id="productGrid">
+        <!-- Product 1 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./img/vestido-largo.avif" alt="Vestido Largo Fashion Knit Trifolio">
+            <div class="product-overlay">
+              <div class="product-actions">
+                <button class="product-btn primary" onclick="addToCart(6)">
+                  Añadir al carrito
+                </button>
+                <button class="product-btn secondary" onclick="showProductDetails(6)">
+                  Ver detalles
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-category">Mujer • Originals</p>
+            <h3 class="product-name">Vestido Largo Fashion Knit Trifolio</h3>
+            <div class="product-price">
+              <span class="price-current">$699,975</span>
+              <span class="price-original">$1,399,950</span>
+              <span class="price-discount">50%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./img/vestido-malla-avif.avif" alt="Vestido Sin Mangas Essentials 3 Rayas Camo Racer Back">
+            <div class="product-overlay">
+              <div class="product-actions">
+                <button class="product-btn primary" onclick="addToCart(23)">
+                  Añadir al carrito
+                </button>
+                <button class="product-btn secondary" onclick="showProductDetails(23)">
+                  Ver detalles
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-category">Mujer • Sportswear</p>
+            <h3 class="product-name">Vestido Sin Mangas Essentials 3 Rayas Camo Racer Back</h3>
+            <div class="product-price">
+              <span class="price-current">$137,970</span>
+              <span class="price-original">$229,950</span>
+              <span class="price-discount">40%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./img/vestido-sin-mangas.avif" alt="Vestido Malla Pride">
+            <div class="product-overlay">
+              <div class="product-actions">
+                <button class="product-btn primary" onclick="addToCart(38)">
+                  Añadir al carrito
+                </button>
+                <button class="product-btn secondary" onclick="showProductDetails(38)">
+                  Ver detalles
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-category">Mujer • Originals</p>
+            <h3 class="product-name">Vestido Malla Pride</h3>
+            <div class="product-price">
+              <span class="price-current">$191,970</span>
+              <span class="price-original">$319,950</span>
+              <span class="price-discount">40%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./img/vestido3avif.avif" alt="Vestido de Tenis Pro AEROREADY Premium Manga Larga">
+            <div class="product-overlay">
+              <div class="product-actions">
+                <button class="product-btn primary" onclick="addToCart(42)">
+                  Añadir al carrito
+                </button>
+                <button class="product-btn secondary" onclick="showProductDetails(42)">
+                  Ver detalles
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-category">Hombre • Deporte</p>
+            <h3 class="product-name">Chaqueta Deportiva Impermeable</h3>
+            <div class="product-price">
+              <span class="price-current">$367,960</span>
+              <span class="price-original">$459,950</span>
+              <span class="price-discount">20%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./img/vestido-tenis-1-aeroready.avif" alt="Zapatillas Running Performance">
+            <div class="product-overlay">
+              <div class="product-actions">
+                <button class="product-btn primary" onclick="addToCart(51)">
+                  Añadir al carrito
+                </button>
+                <button class="product-btn secondary" onclick="showProductDetails(51)">
+                  Ver detalles
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-category">Calzado • Running</p>
+            <h3 class="product-name">Zapatillas Running Performance</h3>
+            <div class="product-price">
+              <span class="price-current">$423,960</span>
+              <span class="price-original">$529,950</span>
+              <span class="price-discount">20%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./img/Vestido2.avif" alt="Vestido Maxi">
+            <div class="product-overlay">
+              <div class="product-actions">
+                <button class="product-btn primary" onclick="addToCart(67)">
+                  Añadir al carrito
+                </button>
+                <button class="product-btn secondary" onclick="showProductDetails(67)">
+                  Ver detalles
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-category">Hombre • Training</p>
+            <h3 class="product-name">Camiseta Deportiva Transpirable</h3>
+            <div class="product-price">
+              <span class="price-current">$103,960</span>
+              <span class="price-original">$129,950</span>
+              <span class="price-discount">20%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Product Details Modal -->
+    <div class="modal" id="productModal">
+      <div class="modal-content">
+        <button class="close-btn">&times;</button>
+        <div class="product-details"></div>
+      </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar">
+      <div class="cart-header">
+        <h2>Tu Carrito</h2>
+        <button class="close-cart">&times;</button>
+      </div>
+      <div class="cart-items"></div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Subtotal</span>
+          <span class="total-amount">$0</span>
+        </div>
+        <a href="/proyecto/metodo de pago/index.html"><button class="checkout-btn">Proceder al pago</button></a>
+        <button class="continue-shopping">Continuar comprando</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="#">Términos y Condiciones</a>
+        <a href="#">Términos y Condiciones Promociones</a>
+        <a href="#">Política de Privacidad</a>
+        <a href="#">Seleccionar País</a>
+        <a href="#">Uso del Sitio</a>
+        <a href="#">SIC</a>
+        <a href="#">PQR</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Data
+    const products = [
+      {
+        id: 6,
+        name: "Vestido Largo Fashion Knit Trifolio",
+        category: "Mujer",
+        subcategory: "Originals",
+        price: 1399950,
+        discountedPrice: 699975,
+        discount: "50%",
+        description: "Elegante vestido largo con diseño Fashion Knit Trifolio, ideal para ocasiones especiales.",
+        installmentInfo: "Hasta 12 x $58.331,25 más interés bancario."
+      },
+      {
+        id: 23,
+        name: "Vestido Sin Mangas Essentials 3 Rayas Camo Racer Back",
+        category: "Mujer",
+        subcategory: "Sportswear",
+        price: 229950,
+        discountedPrice: 137970,
+        discount: "40%",
+        description: "Vestido deportivo sin mangas con estampado de camuflaje y detalles de 3 rayas.",
+        installmentInfo: "Hasta 12 x $11.497,50 más interés bancario."
+      },
+      {
+        id: 38,
+        name: "Vestido Malla Pride",
+        category: "Mujer",
+        subcategory: "Originals",
+        price: 319950,
+        discountedPrice: 191970,
+        discount: "40%",
+        description: "Vestido de malla de la colección Pride. Diseño moderno y ligero.",
+        installmentInfo: "Hasta 12 x $15.997,50 más interés bancario."
+      },
+      {
+        id: 42,
+        name: "Chaqueta Deportiva Impermeable",
+        category: "Hombre",
+        subcategory: "Deporte",
+        price: 459950,
+        discountedPrice: 367960,
+        discount: "20%",
+        description: "Chaqueta deportiva impermeable con tecnología avanzada.",
+        installmentInfo: "Hasta 12 x $30.663,33 más interés bancario."
+      },
+      {
+        id: 51,
+        name: "Zapatillas Running Performance",
+        category: "Calzado",
+        subcategory: "Running",
+        price: 529950,
+        discountedPrice: 423960,
+        discount: "20%",
+        description: "Zapatillas de running con tecnología de amortiguación y soporte.",
+        installmentInfo: "Hasta 12 x $35.330,00 más interés bancario."
+      },
+      {
+        id: 67,
+        name: "Camiseta Deportiva Transpirable",
+        category: "Hombre",
+        subcategory: "Training",
+        price: 129950,
+        discountedPrice: 103960,
+        discount: "20%",
+        description: "Camiseta deportiva con tecnología de transpiración.",
+        installmentInfo: "Hasta 12 x $8.663,33 más interés bancario."
+      }
+    ];
+
+    // Utility functions
+    const formatPrice = (price) => {
+      return new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }).format(price);
+    };
+
+    // State management
+    let cart = [];
+    let isCartOpen = false;
+
+    // DOM Elements
+    const productGrid = document.getElementById('productGrid');
+    const cartBtn = document.querySelector('.cart-btn');
+    const cartSidebar = document.querySelector('.cart-sidebar');
+    const cartItems = document.querySelector('.cart-items');
+    const cartCount = document.querySelector('.cart-count');
+    const totalAmount = document.querySelector('.total-amount');
+    const modal = document.getElementById('productModal');
+    const closeModal = modal.querySelector('.close-btn');
+    const closeCart = document.querySelector('.close-cart');
+    const continueShoppingBtn = document.querySelector('.continue-shopping');
+
+    // Event Listeners
+    cartBtn.addEventListener('click', toggleCart);
+    closeCart.addEventListener('click', toggleCart);
+    continueShoppingBtn.addEventListener('click', toggleCart);
+    closeModal.addEventListener('click', closeProductModal);
+
+    // Functions
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      const existingItem = cart.find(item => item.id === productId);
+      
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+      
+      updateCart();
+      if (!isCartOpen) toggleCart();
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      updateCart();
+    }
+
+    function updateQuantity(productId, delta) {
+      const item = cart.find(item => item.id === productId);
+      if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+          removeFromCart(productId);
+        } else {
+          updateCart();
+        }
+      }
+    }
+
+    function updateCart() {
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+      
+      const total = cart.reduce((sum, item) => 
+        sum + (item.discountedPrice || item.price) * item.quantity, 0
+      );
+      totalAmount.textContent = formatPrice(total);
+      
+      renderCartItems();
+    }
+
+    function renderCartItems() {
+      if (cart.length === 0) {
+        cartItems.innerHTML = `
+          <div class="empty-cart">
+            <p>Tu carrito está vacío</p>
+            <p>Añade algunos productos para comenzar</p>
+          </div>
+        `;
+        return;
+      }
+      
+      cartItems.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <img src="${document.querySelector(`.product-card:nth-child(${products.findIndex(p => p.id === item.id) + 1}) .product-image img`).src}" alt="${item.name}" class="cart-item-image">
+          <div class="cart-item-details">
+            <p class="cart-item-category">${item.category} • ${item.subcategory}</p>
+            <h3 class="cart-item-name">${item.name}</h3>
+            <p class="cart-item-price">${formatPrice(item.discountedPrice || item.price)}</p>
+            <div class="cart-item-quantity">
+              <button onclick="updateQuantity(${item.id}, -1)">-</button>
+              <span>${item.quantity}</span>
+              <button onclick="updateQuantity(${item.id}, 1)">+</button>
+            </div>
+          </div>
+          <button class="remove-item" onclick="removeFromCart(${item.id})">&times;</button>
+        </div>
+      `).join('');
+    }
+
+    function toggleCart() {
+      isCartOpen = !isCartOpen;
+      cartSidebar.classList.toggle('active');
+      document.body.style.overflow = isCartOpen ? 'hidden' : '';
+    }
+
+    function showProductDetails(productId) {
+      const product = products.find(p => p.id === productId);
+      const productElement = document.querySelector(`.product-card:nth-child(${products.findIndex(p => p.id === productId) + 1}`);
+      const productImage = productElement.querySelector('.product-image img').src;
+      
+      modal.querySelector('.product-details').innerHTML = `
+        <div class="product-details-grid">
+          <div class="product-details-image">
+            <img src="${productImage}" alt="${product.name}">
+          </div>
+          <div class="product-details-info">
+            <p class="product-category">${product.category} • ${product.subcategory}</p>
+            <h2 class="product-name">${product.name}</h2>
+            <div class="product-price">
+              ${product.discountedPrice 
+                ? `<span class="price-current">${formatPrice(product.discountedPrice)}</span>
+                   <span class="price-original">${formatPrice(product.price)}</span>
+                   <span class="price-discount">${product.discount}</span>`
+                : `<span class="price-current">${formatPrice(product.price)}</span>`
+              }
+            </div>
+            <p class="product-description">${product.description}</p>
+            <button class="product-btn primary" onclick="addToCart(${product.id})">
+              Añadir al carrito
+            </button>
+          </div>
+        </div>
+      `;
+      
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProductModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  </script>
+</body>
+</html>
